@@ -1,0 +1,8 @@
+
+**** Build of configuration Release for project ECE298_Project_WithAPI ****
+
+"C:\\Software\\ccs83\\ccsv8\\utils\\bin\\gmake" -k -j 4 all -O 
+ 
+gmake[1]: 'ECE298_Project_WithAPI.out' is up to date.
+
+**** Build Finished ****

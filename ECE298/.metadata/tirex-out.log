@@ -1,0 +1,3 @@
+-----TI-REX started at Sat Sep 21 2019 12:40:32 GMT-0400 (Eastern Daylight Time)
+Sat, 21 Sep 2019 16:40:35 GMT connect deprecated methodOverride: use TIREX server listening on port 55432
+ app.js:641:21
