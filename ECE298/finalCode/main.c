@@ -2,8 +2,9 @@
 #include "driverlib/driverlib.h"
 #include "hal_LCD.h"
 #include "msp430fr4133.h"
-
+#include <stdbool.h>
 #include <stdio.h>
+#include <string.h> 
 
 /*
  * This project contains some code samples that may be useful.
@@ -13,8 +14,194 @@
 char ADCState = 0; //Busy state of the ADC
 int16_t ADCResult = 0; //Storage for the ADC conversion result
 
+int limitX = 99;
+int limitY = 99;
+
+//void showChar(char c, int position)
+
+//s0 = 1.3
+//s1 = 1.4
+//s2 = 1.5
+//A4 = s2 
+//A5 = s2, s0 
+//A6 = s2, s1
+//A7 = s2,s1,s0
+
+
+
+
+void keyPadInPut(char * x, char * y){
+    starting:
+    int i = 0;
+    bool entered = false;
+    bool reEntered = false;
+    //int valX1 = x[0];
+    //int valX2 = x[1];
+    //int valY1 = y[0];
+    //int valY2 = y[1];
+    showChar('X', 6);
+    showChar('Y', 3);
+    char * mockX = malloc(sizeOf(char) * 2);
+    char * mockY = malloc(sizeOf(char) * 2);
+    mockX[0] = loopUntilFound(5);
+    mockX[1] = loopUntilFound(4);
+    mockY[0] = loopUntilFound(2);
+    mockY[1] = loopUntilFound(1);
+   
+    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN3 ); // turn on row 4
+    while(!entered || ! reEntered){ // delay until we get a # for accept and a * for cancel
+        if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7 )){
+            reEntered = true;
+        }
+        else if (GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){
+            entered = true;
+        }
+    }
+    if(reEntered){
+        dispayScrollText("Enter Again!");
+        goto starting;
+    }
+    else if(entered){
+        memcpy(x, mockX, sizeof(x));
+        memcpy(y, mockY, sizeof(y));
+        return;
+    }
+       
+                    
+   
+}
+char loopUntilFound(int position){
+     char previous = NULL;
+     while(1){
+        
+            GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5);// row 1
+                    if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN3)){//col 2
+                        if(previous == '2'){
+                            showChar('2', int position);
+                            break;
+                        }
+                        else{
+                            previous = '2';
+                        }
+                    }
+                    if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
+                        if(previous == '1'){
+                            showChar('1', int position);
+                            break;
+                        }
+                        else{
+                            previous = '1';
+                        }
+                    }
+                    if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){ // col 3
+                        if(previous == '3'){
+                            showChar('3', int position);
+                            break;
+                        }
+                        else{
+                            previous = '3';
+                        }
+                    }
+        
+            GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN3 );// row 4
+                     
+                    if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
+                        if(previous == '0'){
+                            showChar('0', int position);
+                            break;
+                        }
+                        else{
+                            previous = '0';
+                        }
+                    }
+           
+        
+            GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN4 );// row 3
+                     if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN3)){//col 2
+                        if(previous == '7'){
+                            showChar('7', int position);
+                            break;
+                        }
+                        else{
+                            previous = '7';
+                        }
+                    }
+                    if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
+                        if(previous == '8'){
+                            showChar('8', int position);
+                            break;
+                        }
+                        else{
+                            previous = '8';
+                        }
+                    }
+                    if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){ // col 3
+                        if(previous == '9'){
+                            showChar('9', int position);
+                            break;
+                        }
+                        else{
+                            previous = '9';
+                        }
+                    }
+        
+            GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN4 | GPIO_PIN3);// row 2
+                    if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN3)){//col 2
+                        if(previous == '5'){
+                            showChar('5', int position);
+                            break;
+                        }
+                        else{
+                            previous = '5';
+                        }
+                    }
+                    if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
+                        if(previous == '4'){
+                            showChar('4', int position);
+                            break;
+                        }
+                        else{
+                            previous = '4';
+                        }
+                    }
+                    if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){ // col 3
+                        if(previous == '6'){
+                            showChar('6', int position);
+                            break;
+                        }
+                        else{
+                            previous = '6';
+                        }
+                    }
+   
+    }
+    return previous;
+}
+
+
 void main(void)
 {
+    
+    
+    
+    // Code Controller here
+    
+    //keypad 1 digit demo
+   /* while(1){
+        GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN6);
+        // if 5.0 is on then 2
+        if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN0)){
+
+            displayScrollText("2");
+        }
+    }*/
+
+    
+    
+    
+    
+    
+    
     char buttonState = 0; //Current button press state (to allow edge detection)
 
     /*
@@ -64,15 +251,6 @@ void main(void)
     GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P5, GPIO_PIN0);*/
 
 
-//keypad 1 digit demo
-   /* while(1){
-        GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN6);
-        // if 5.0 is on then 2
-        if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN0)){
-
-            displayScrollText("2");
-        }
-    }*/
 
     /*while(1){
         displayScrollText("125CM");
@@ -82,7 +260,7 @@ void main(void)
     // pin4 = B
     // pin3 = C
     // pin6 =D
-    // AB – BC – CD – DA
+    // AB â€“ BC â€“ CD â€“ DA
 
     //Counter ClockWise
  /* while(1){
