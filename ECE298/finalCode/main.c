@@ -16,6 +16,8 @@ int16_t ADCResult = 0; //Storage for the ADC conversion result
 
 int limitX = 99;
 int limitY = 99;
+int plotX = 0;
+int plotY = 0;
 
 //void showChar(char c, int position)
 
@@ -178,40 +180,83 @@ char loopUntilFound(int position){
     return previous;
 }
 
+int runMotor(int motorNum, int nPlot){
+    int * currentPlot = 0;
+    bool hasExeeded = false;
+    int direction = 0; // 0 is forward and 1 is backwards. 
+    int unitsMove = 0;
+    if( motorNum == 1){ // x
+         currentPlot = &plotX;
+         if(nPlot >= *currentPlot){
+             if(nPlot > limitX || (currentPlot + nPLot) > = limitX){
+                 hasExeeded = true;
+                 unitsMove = limitX - currentPlot; 
+             }
+             else{
+                 unitsMove = nPlot- currentPlot;
+             }
+             
+         }
+         else if ( nPlot < *currentPlot ){ // we are travling backwards
+             direction = 1;// backwards travel
+             if(currentPlot - nPlot < = 0){
+                 hasExceeded = true;
+                 unitsMove = currentPlot;
+             }
+             else{
+                 unitsMove = currentPlot - nPlot;
+             }
+         }
+        else{
+            return -1;
+        }
+        //S1 = 000;
+        //S2 = 001;
+        //s3 = 010;
+        //s4 = 011;
+    }
+    if( motorNum == 2){ // y
+         currentPlot = &plotY;
+         if(nPlot >= *currentPlot){
+             if(nPlot > limitY || (currentPlot + nPLot) > = limitY){
+                 hasExeeded = true;
+                 unitsMove = limitY - currentPlot; 
+             }
+             else{
+                 unitsMove = nPlot- currentPlot;
+             }
+             
+         }
+         else if ( nPlot < *currentPlot ){ // we are travling backwards
+             direction = 1;// backwards travel
+             if(currentPlot - nPlot < = 0){
+                 hasExceeded = true;
+                 unitsMove = currentPlot;
+             }
+             else{
+                 unitsMove = currentPlot - nPlot;
+             }
+         }
+        else{
+            return -1;
+        }
+       // S1 = 000;
+      //  S2 = 001;
+       // s3 = 010;
+       // s4 = 011;
+    }
+    else{
+        return -1; // error encountered    
+    }
+    
+    return 0;
+}
+
 
 void main(void)
 {
-    
-    
-    
-    // Code Controller here
-    
-    //keypad 1 digit demo
-   /* while(1){
-        GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN6);
-        // if 5.0 is on then 2
-        if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN0)){
-
-            displayScrollText("2");
-        }
-    }*/
-
-    
-    
-    
-    
-    
-    
     char buttonState = 0; //Current button press state (to allow edge detection)
 
-    /*
-     * Functions with two underscores in front are called compiler intrinsics.
-     * They are documented in the compiler user guide, not the IDE or MCU guides.
-     * They are a shortcut to insert some assembly code that is not really
-     * expressible in plain C/C++. Google "MSP430 Optimizing C/C++ Compiler
-     * v18.12.0.LTS" and search for the word "intrinsic" if you want to know
-     * more.
-     * */
 
     //Turn off interrupts during initialization
     __disable_interrupt();
@@ -256,11 +301,6 @@ void main(void)
         displayScrollText("125CM");
     }*/
 
-    // pin5 = A
-    // pin4 = B
-    // pin3 = C
-    // pin6 =D
-    // AB – BC – CD – DA
 
     //Counter ClockWise
  /* while(1){
