@@ -32,46 +32,50 @@ int plotY = 0;
 
 
 
+
 void keyPadInPut(char * x, char * y){
-    starting:
-    int i = 0;
-    bool entered = false;
-    bool reEntered = false;
-    //int valX1 = x[0];
-    //int valX2 = x[1];
-    //int valY1 = y[0];
-    //int valY2 = y[1];
-    showChar('X', 6);
-    showChar('Y', 3);
-    char * mockX = malloc(sizeOf(char) * 2);
-    char * mockY = malloc(sizeOf(char) * 2);
-    mockX[0] = loopUntilFound(5);
-    mockX[1] = loopUntilFound(4);
-    mockY[0] = loopUntilFound(2);
-    mockY[1] = loopUntilFound(1);
-   
-    GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN3 ); // turn on row 4
-    while(!entered || ! reEntered){ // delay until we get a # for accept and a * for cancel
-        if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7 )){
-            reEntered = true;
+
+    //starting:
+    //int i = 0;
+    while(true){
+        bool entered = false;
+        bool reEntered = false;
+
+        showChar('X', 6);
+        showChar('Y', 3);
+        char mockX[2];
+        char mockY[2];
+
+        mockX[0] = loopUntilFound(5);
+        mockX[1] = loopUntilFound(4);
+        mockY[0] = loopUntilFound(2);
+        mockY[1] = loopUntilFound(1);
+
+        GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN3 ); // turn on row 4
+        while(!entered || ! reEntered){ // delay until we get a # for accept and a * for cancel
+            if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7 )){
+                reEntered = true;
+            }
+            else if (GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){
+                entered = true;
+            }
         }
-        else if (GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){
-            entered = true;
+        if(reEntered){
+            displayScrollText("Enter Again!");
+            //goto starting;
+        }
+        else if(entered){
+            memcpy(x, mockX, sizeof(x));
+            memcpy(y, mockY, sizeof(y));
+            return;
         }
     }
-    if(reEntered){
-        dispayScrollText("Enter Again!");
-        goto starting;
-    }
-    else if(entered){
-        memcpy(x, mockX, sizeof(x));
-        memcpy(y, mockY, sizeof(y));
-        return;
-    }
-       
+
                     
-   
 }
+
+
+
 char loopUntilFound(int position){
      char previous = NULL;
      while(1){
@@ -79,7 +83,7 @@ char loopUntilFound(int position){
             GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5);// row 1
                     if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN3)){//col 2
                         if(previous == '2'){
-                            showChar('2', int position);
+                            showChar('2', position);
                             break;
                         }
                         else{
@@ -88,7 +92,7 @@ char loopUntilFound(int position){
                     }
                     if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
                         if(previous == '1'){
-                            showChar('1', int position);
+                            showChar('1', position);
                             break;
                         }
                         else{
@@ -97,7 +101,7 @@ char loopUntilFound(int position){
                     }
                     if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){ // col 3
                         if(previous == '3'){
-                            showChar('3', int position);
+                            showChar('3', position);
                             break;
                         }
                         else{
@@ -109,7 +113,7 @@ char loopUntilFound(int position){
                      
                     if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
                         if(previous == '0'){
-                            showChar('0', int position);
+                            showChar('0', position);
                             break;
                         }
                         else{
@@ -121,7 +125,7 @@ char loopUntilFound(int position){
             GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN4 );// row 3
                      if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN3)){//col 2
                         if(previous == '7'){
-                            showChar('7', int position);
+                            showChar('7', position);
                             break;
                         }
                         else{
@@ -130,7 +134,7 @@ char loopUntilFound(int position){
                     }
                     if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
                         if(previous == '8'){
-                            showChar('8', int position);
+                            showChar('8', position);
                             break;
                         }
                         else{
@@ -139,7 +143,7 @@ char loopUntilFound(int position){
                     }
                     if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){ // col 3
                         if(previous == '9'){
-                            showChar('9', int position);
+                            showChar('9', position);
                             break;
                         }
                         else{
@@ -150,7 +154,7 @@ char loopUntilFound(int position){
             GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN4 | GPIO_PIN3);// row 2
                     if(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN3)){//col 2
                         if(previous == '5'){
-                            showChar('5', int position);
+                            showChar('5', position);
                             break;
                         }
                         else{
@@ -159,7 +163,7 @@ char loopUntilFound(int position){
                     }
                     if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN7)){// col 1
                         if(previous == '4'){
-                            showChar('4', int position);
+                            showChar('4', position);
                             break;
                         }
                         else{
@@ -168,7 +172,7 @@ char loopUntilFound(int position){
                     }
                     if(GPIO_getInputPinValue(GPIO_PORT_P2, GPIO_PIN5)){ // col 3
                         if(previous == '6'){
-                            showChar('6', int position);
+                            showChar('6', position);
                             break;
                         }
                         else{
@@ -180,31 +184,33 @@ char loopUntilFound(int position){
     return previous;
 }
 
+
 int runMotor(int motorNum, int nPlot){
     int * currentPlot = 0;
     bool hasExeeded = false;
     int direction = 0; // 0 is forward and 1 is backwards. 
     int unitsMove = 0;
+
     if( motorNum == 1){ // x
          currentPlot = &plotX;
          if(nPlot >= *currentPlot){
-             if(nPlot > limitX || (currentPlot + nPLot) > = limitX){
+             if( (nPlot > limitX) || (*currentPlot + nPlot) >= limitX ){
                  hasExeeded = true;
-                 unitsMove = limitX - currentPlot; 
+                 unitsMove = limitX - *currentPlot;
              }
              else{
-                 unitsMove = nPlot- currentPlot;
+                 unitsMove = nPlot- *currentPlot;
              }
              
          }
          else if ( nPlot < *currentPlot ){ // we are travling backwards
              direction = 1;// backwards travel
-             if(currentPlot - nPlot < = 0){
-                 hasExceeded = true;
-                 unitsMove = currentPlot;
+             if( (*currentPlot - nPlot) <= 0){
+                 hasExeeded = true;
+                 unitsMove = *currentPlot;
              }
              else{
-                 unitsMove = currentPlot - nPlot;
+                 unitsMove = *currentPlot - nPlot;
              }
          }
         else{
@@ -218,30 +224,30 @@ int runMotor(int motorNum, int nPlot){
     if( motorNum == 2){ // y
          currentPlot = &plotY;
          if(nPlot >= *currentPlot){
-             if(nPlot > limitY || (currentPlot + nPLot) > = limitY){
+             if(nPlot > limitY || (*currentPlot + nPlot) >= limitY){
                  hasExeeded = true;
-                 unitsMove = limitY - currentPlot; 
+                 unitsMove = limitY - *currentPlot;
              }
              else{
-                 unitsMove = nPlot- currentPlot;
+                 unitsMove = nPlot- *currentPlot;
              }
              
          }
          else if ( nPlot < *currentPlot ){ // we are travling backwards
              direction = 1;// backwards travel
-             if(currentPlot - nPlot < = 0){
-                 hasExceeded = true;
-                 unitsMove = currentPlot;
+             if(currentPlot - nPlot <= 0){
+                 hasExeeded = true;
+                 unitsMove = *currentPlot;
              }
              else{
-                 unitsMove = currentPlot - nPlot;
+                 unitsMove = *currentPlot - nPlot;
              }
          }
         else{
             return -1;
         }
        // S1 = 000;
-      //  S2 = 001;
+       //  S2 = 001;
        // s3 = 010;
        // s4 = 011;
     }
@@ -250,6 +256,12 @@ int runMotor(int motorNum, int nPlot){
     }
     
     return 0;
+}
+
+void tester(){
+
+
+
 }
 
 
@@ -364,7 +376,7 @@ void main(void)
             //i++;
       }
 */
-
+    //GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN5| GPIO_PIN3 ); // turn on row 4
     int less = 0 ;
     while(1) //Do this when you want an infinite loop of code
     {
@@ -387,13 +399,13 @@ void main(void)
         if (ADCState == 0)
         {
             showHex((int)ADCResult); //Put the previous result on the LCD display
-            if((int)ADCResult <= 600){ // 1000 hex dispaly
+            /*if((int)ADCResult <= 600){ // 1000 hex dispaly
                 less++;
                 if(less >1000){
 
                     break;
                 }
-            }
+            }*/
             ADCState = 1; //Set flag to indicate ADC is busy - ADC ISR (interrupt) will clear it
             ADC_startConversion(ADC_BASE, ADC_SINGLECHANNEL);
         }

@@ -45,6 +45,8 @@ hal_LCD.obj: ../driverlib/tia.h
 hal_LCD.obj: ../driverlib/eusci_a_spi.h
 hal_LCD.obj: ../driverlib/timer_b.h
 hal_LCD.obj: ../driverlib/eusci_b_spi.h
+hal_LCD.obj: C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdio.h
+hal_LCD.obj: C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdarg.h
 
 ../hal_LCD.c: 
 ../hal_LCD.h: 
@@ -91,3 +93,5 @@ C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdbool.
 ../driverlib/eusci_a_spi.h: 
 ../driverlib/timer_b.h: 
 ../driverlib/eusci_b_spi.h: 
+C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdio.h: 
+C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdarg.h: 

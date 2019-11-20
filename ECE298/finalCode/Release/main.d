@@ -41,12 +41,13 @@ main.obj: ../driverlib/tia.h
 main.obj: ../driverlib/eusci_a_spi.h
 main.obj: ../driverlib/timer_b.h
 main.obj: ../driverlib/eusci_b_spi.h
-main.obj: ../driverlib/driverlib.h
-main.obj: ../hal_LCD.h
 main.obj: C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdio.h
 main.obj: C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/_ti_config.h
 main.obj: C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/linkage.h
 main.obj: C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdarg.h
+main.obj: C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/string.h
+main.obj: ../driverlib/driverlib.h
+main.obj: ../hal_LCD.h
 
 ../main.c: 
 ../main.h: 
@@ -89,9 +90,10 @@ C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdbool.
 ../driverlib/eusci_a_spi.h: 
 ../driverlib/timer_b.h: 
 ../driverlib/eusci_b_spi.h: 
-../driverlib/driverlib.h: 
-../hal_LCD.h: 
 C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdio.h: 
 C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/_ti_config.h: 
 C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/linkage.h: 
 C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/stdarg.h: 
+C:/Software/ccs83/ccsv8/tools/compiler/ti-cgt-msp430_18.1.4.LTS/include/string.h: 
+../driverlib/driverlib.h: 
+../hal_LCD.h: 
