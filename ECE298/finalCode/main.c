@@ -259,9 +259,36 @@ int runMotor(int motorNum, int nPlot){
 }
 
 void tester(){
-
-
-
+// anubhav either run in debug mode and test each pin with the blocks bellow, 
+    //or comment them out and run one block at a time and test the pins. 
+    // testing the motor driver 1
+    
+    // S0 5.2 S1 1.6 S2 5.0  ( check and see that these pins are io pins that work. )
+    
+    // BLOCK 1: AB or Pin 1 and 2 on motor driver
+    // set mux to A4 = S2 on S0 S1 off 
+    PIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN0); // now test the current from those points into the driver
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN6);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN2);
+    
+    // BLOCK 2:BC or Pin 2 and 3 on motor driver
+    // set mux to A5 = S2,S0  on  S1 off 
+    PIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN0); 
+    PIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN2); 
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN6);
+     
+    // BLOCK 3:CD or Pin 3 and 4 on motor driver
+    // set mux to A6 = S2,S1 on  S0 off 
+    PIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN0); 
+    PIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN6); 
+    GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN2);
+    
+     // BLOCK 4:DA or Pin 1 and 4 on motor driver
+    // set mux to A7 = S2,S1,S0 on 
+    PIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN0); 
+    PIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN6); 
+    PIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN2);
+     
 }
 
 
@@ -297,6 +324,16 @@ void main(void)
     //All done initializations - turn interrupts back on.
     __enable_interrupt();
     // port 8.1 is used for sensor
+    
+    
+    tester(); // anubhav
+    
+    
+    
+    
+    
+    
+    
 //    GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN6|GPIO_PIN3|GPIO_PIN5);
 
    /* GPIO_setAsInputPin(GPIO_PORT_P1, GPIO_PIN4);
